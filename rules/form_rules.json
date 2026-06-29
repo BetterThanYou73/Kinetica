@@ -1,0 +1,55 @@
+{
+  "squat": [
+    {
+      "id": "knee_cave",
+      "cue": "Keep knees tracking over toes",
+      "avoid": "Knees caving inward"
+    },
+    {
+      "id": "depth",
+      "cue": "Hit parallel — thighs level with the floor",
+      "avoid": "Cutting the squat short"
+    },
+    {
+      "id": "back_angle",
+      "cue": "Chest up, slight forward lean is okay",
+      "avoid": "Rounding the lower back"
+    }
+  ],
+  "bicep_curl": [
+    {
+      "id": "elbow_drift",
+      "cue": "Pin elbows to your sides throughout",
+      "avoid": "Elbows swinging forward"
+    },
+    {
+      "id": "wrist_neutral",
+      "cue": "Keep wrists neutral, don't bend them back",
+      "avoid": "Hyperextending wrists at the top"
+    }
+  ],
+  "tricep_pushdown": [
+    {
+      "id": "elbow_flare",
+      "cue": "Elbows locked at your sides",
+      "avoid": "Elbows flaring out"
+    },
+    {
+      "id": "lean",
+      "cue": "Slight forward lean is fine, stay controlled",
+      "avoid": "Hinging at the hips to use bodyweight"
+    }
+  ],
+  "shoulder_press": [
+    {
+      "id": "lower_back",
+      "cue": "Brace your core, neutral spine",
+      "avoid": "Arching lower back to push the weight"
+    },
+    {
+      "id": "bar_path",
+      "cue": "Press straight up, bar close to your face",
+      "avoid": "Pressing forward instead of vertical"
+    }
+  ]
+}

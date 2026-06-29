@@ -1,0 +1,40 @@
+{
+  "bicep_curl": {
+    "muscle_group": "biceps",
+    "movement_pattern": "elbow_flexion",
+    "equipment": ["barbell", "dumbbell", "cable"],
+    "substitutes": {
+      "dumbbell": ["hammer_curl", "concentration_curl"],
+      "cable": ["cable_curl", "rope_hammer_curl"],
+      "bodyweight": ["chin_up", "resistance_band_curl"]
+    }
+  },
+  "tricep_pushdown": {
+    "muscle_group": "triceps",
+    "movement_pattern": "elbow_extension",
+    "equipment": ["cable"],
+    "substitutes": {
+      "dumbbell": ["overhead_tricep_extension", "tricep_kickback"],
+      "barbell": ["skull_crusher", "close_grip_bench"],
+      "bodyweight": ["diamond_pushup", "bench_dip"]
+    }
+  },
+  "squat": {
+    "muscle_group": "quads",
+    "movement_pattern": "knee_flexion",
+    "equipment": ["barbell", "dumbbell", "bodyweight"],
+    "substitutes": {
+      "dumbbell": ["goblet_squat", "dumbbell_lunge"],
+      "bodyweight": ["bodyweight_squat", "jump_squat", "bulgarian_split_squat"]
+    }
+  },
+  "shoulder_press": {
+    "muscle_group": "shoulders",
+    "movement_pattern": "vertical_push",
+    "equipment": ["barbell", "dumbbell", "cable"],
+    "substitutes": {
+      "dumbbell": ["dumbbell_shoulder_press", "arnold_press"],
+      "bodyweight": ["pike_pushup", "handstand_pushup"]
+    }
+  }
+}
