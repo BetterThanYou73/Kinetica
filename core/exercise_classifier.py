@@ -13,8 +13,11 @@ def classify(landmarks):
         return None
 
     for name, fn in CLASSIFIERS.items():
-        if fn(landmarks):
-            return name
+        try:
+            if fn(landmarks):
+                return name
+        except KeyError:
+            continue
 
     return None
 

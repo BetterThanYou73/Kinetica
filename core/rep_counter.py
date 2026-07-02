@@ -44,7 +44,10 @@ def get_angle_for_exercise(exercise, landmarks):
     }
 
     handler = handlers.get(exercise)
-    return handler(landmarks) if handler else None
+    try:
+        return handler(landmarks) if handler else None
+    except KeyError:
+        return None
 
 
 def _angle_elbow_left(lm):
