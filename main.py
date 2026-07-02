@@ -17,7 +17,15 @@ def run(mock=False):
     counter = RepCounter()
     current_exercise = None
 
-    cap = cv2.VideoCapture(0) if not mock else None
+    if not mock:
+        cap = cv2.VideoCapture(0)
+        # stereo USB camera needs explicit resolution — defaults may be lower
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+        if not cap.isOpened():
+            raise RuntimeError("Camera not found. Check 'ls /dev/video*' and adjust VideoCapture index.")
+    else:
+        cap = None
 
     print("Kinetica started. Press 'q' to quit.")
 
