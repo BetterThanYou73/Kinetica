@@ -106,10 +106,11 @@ class PoseDetector:
 
         h, w = left.shape[:2]
 
-        # preprocess
+        # preprocess — dtype must match model: UINT8 for quantized, FLOAT32 for float16
         img = cv2.resize(left, (MODEL_INPUT_SIZE, MODEL_INPUT_SIZE))
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        tensor = np.expand_dims(img.astype(np.float32), axis=0)
+        dtype = self._input["dtype"]
+        tensor = np.expand_dims(img.astype(dtype), axis=0)
 
         self._interpreter.set_tensor(self._input["index"], tensor)
         self._interpreter.invoke()
