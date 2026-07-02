@@ -13,7 +13,7 @@ from core.exercise_classifier import classify
 
 
 def run(mock=False):
-    detector = PoseDetector(mock=mock)
+    detector = PoseDetector(mock=mock, stereo=not mock)
     counter = RepCounter()
     current_exercise = None
 

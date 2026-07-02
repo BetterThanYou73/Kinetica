@@ -6,6 +6,16 @@ import numpy as np
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 
+# Stereo camera outputs a side-by-side 2560x720 frame.
+# We use the left half for pose tracking (right half available for depth later).
+STEREO_FRAME_WIDTH = 2560
+SINGLE_WIDTH = STEREO_FRAME_WIDTH // 2  # 1280
+
+
+def split_stereo(frame):
+    """Split a 2560x720 side-by-side stereo frame into left and right 1280x720 frames."""
+    return frame[:, :SINGLE_WIDTH], frame[:, SINGLE_WIDTH:]
+
 
 def calculate_angle(a, b, c):
     """Angle at joint b given three keypoints (each a [x, y] array)."""
@@ -17,8 +27,9 @@ def calculate_angle(a, b, c):
 
 
 class PoseDetector:
-    def __init__(self, mock=False):
+    def __init__(self, mock=False, stereo=True):
         self.mock = mock
+        self.stereo = stereo
         if not mock:
             self.pose = mp_pose.Pose(
                 model_complexity=1,
@@ -27,24 +38,30 @@ class PoseDetector:
             )
 
     def process(self, frame):
-        """Return (annotated_frame, landmarks_dict) or (frame, None) on failure."""
+        """Return (annotated_left_frame, landmarks_dict) or (frame, None) on failure."""
         if self.mock:
             return frame, None
 
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # split stereo frame; use left lens for pose, keep right for future depth use
+        if self.stereo and frame.shape[1] == STEREO_FRAME_WIDTH:
+            left, _right = split_stereo(frame)
+        else:
+            left = frame
+
+        rgb = cv2.cvtColor(left, cv2.COLOR_BGR2RGB)
         results = self.pose.process(rgb)
 
         if not results.pose_landmarks:
-            return frame, None
+            return left, None
 
-        mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+        mp_drawing.draw_landmarks(left, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
         lm = results.pose_landmarks.landmark
         landmarks = {
             name: [lm[idx].x, lm[idx].y, lm[idx].z]
             for name, idx in KEYPOINTS.items()
         }
-        return frame, landmarks
+        return left, landmarks
 
     def close(self):
         if not self.mock:
