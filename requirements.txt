@@ -1,4 +1,7 @@
-mediapipe>=0.10.0
+# On Raspberry Pi, install tflite-runtime instead of tensorflow:
+#   pip install tflite-runtime
+# If tflite-runtime has no wheel for your Python version, use:
+#   pip install tensorflow
 opencv-python>=4.8.0
 sqlalchemy>=2.0.0
 numpy>=1.24.0
