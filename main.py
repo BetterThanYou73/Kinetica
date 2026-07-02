@@ -18,12 +18,18 @@ def run(mock=False):
     current_exercise = None
 
     if not mock:
-        cap = cv2.VideoCapture(0)
-        # stereo USB camera needs explicit resolution — defaults may be lower
+        cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+        # 2560x720 stereo mode is only available at 30fps under MJPG — YUYV tops out at 5fps
+        cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*"MJPG"))
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+        cap.set(cv2.CAP_PROP_FPS, 30)
         if not cap.isOpened():
             raise RuntimeError("Camera not found. Check 'ls /dev/video*' and adjust VideoCapture index.")
+        actual_w = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        actual_h = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        actual_fps = cap.get(cv2.CAP_PROP_FPS)
+        print(f"Camera opened: {actual_w}x{actual_h} @ {actual_fps}fps")
     else:
         cap = None
 
